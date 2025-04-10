@@ -14,14 +14,15 @@ module.exports = {
     },
     extend: {
       colors: {
+        wheat: "#F6F6EF", // Hacker News-like background
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "hsl(var(--primary))", // Will be set via CSS variables
+          foreground: "hsl(var(--primary-foreground))", // Will be set via CSS variables
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
