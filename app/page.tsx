@@ -5,12 +5,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import ReactMarkdown from 'react-markdown';
 import { Send } from 'lucide-react';
 
 export default function Chat() {
-  const { messages, input, handleInputChange, handleSubmit } = useChat({
+  const { messages, input, handleInputChange, handleSubmit, status, data } = useChat({
     maxSteps: 3
   });
   
@@ -87,7 +86,7 @@ export default function Chat() {
               type="submit" 
               size="icon" 
               className="absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full disabled:opacity-50"
-              disabled={!input.trim()}
+              disabled={!input.trim() || status !== 'ready'}
             >
               <Send className="w-4 h-4" />
               <span className="sr-only">Send message</span>
