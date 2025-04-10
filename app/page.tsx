@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import ReactMarkdown from 'react-markdown';
 
 export default function Chat() {
   const { messages, input, handleInputChange, handleSubmit } = useChat({
@@ -34,11 +35,6 @@ export default function Chat() {
                   key={m.id} 
                   className={`flex gap-3 text-sm ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
-                  {m.role === 'user' && (
-                    <Avatar>
-                      <AvatarFallback>U</AvatarFallback>
-                    </Avatar>
-                  )}
                   {m.role !== 'user' && (
                      <Avatar>
                       <AvatarImage src="/pg.png" alt="Graham Bot Logo" />
@@ -46,17 +42,17 @@ export default function Chat() {
                     </Avatar>
                   )}
                   <div 
-                    className={`p-3 rounded-lg shadow-md ${m.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground'}`}
+                    className={`p-3 prose prose-sm max-w-none ${m.role === 'user' ? 'bg-secondary text-secondary-foreground rounded-3xl break-words border border-input-border px-4 py-2.5 rounded-br-lg' : ''}`}
                   >
-                    <p className="leading-relaxed">
-                      {m.content.length > 0 ? (
-                        m.content
-                      ) : (
-                        <span className="italic font-light">
-                          {'calling tool: ' + (m.parts?.find(part => part.type === 'tool-invocation') as any)?.toolInvocation.toolName}
-                        </span>
-                      )}
-                    </p>
+                    {m.content.length > 0 ? (
+                      <ReactMarkdown>
+                        {m.content}
+                      </ReactMarkdown>
+                    ) : (
+                      <span className="italic font-light">
+                        {'calling tool: ' + (m.parts?.find(part => part.type === 'tool-invocation') as any)?.toolInvocation.toolName}
+                      </span>
+                    )}
                   </div>
                 </div>
               ))}
@@ -66,12 +62,12 @@ export default function Chat() {
         <CardFooter>
           <form onSubmit={handleSubmit} className="flex w-full items-center space-x-2">
             <Input
-              className="flex-1"
+              className="flex-1 focus-visible:ring-0 focus-visible:ring-primary/100 focus-visible:ring-offset-1 focus-visible:ring-offset-transparent"
               value={input}
-              placeholder="Ask Graham Bot something..."
+              placeholder="Ask Paul Graham Bot something..."
               onChange={handleInputChange}
             />
-            <Button type="submit" className="bg-primary hover:bg-primary/90">
+            <Button type="submit" className="bg-primary hover:bg-primary/90 text-white">
               Send
             </Button>
           </form>
