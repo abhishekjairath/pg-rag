@@ -23,9 +23,14 @@ export const findRelevantContent = async (userQuery: string) => {
     userQueryEmbedded,
   )})`;
   const similarGuides = await db
-    .select({ name: embeddings.content, similarity })
+    .select({
+      name: embeddings.content,
+      similarity,
+      title: essays.title,
+      link: essays.link,
+    })
     .from(embeddings)
-    .where(gt(similarity, 0.75))
+    .where(gt(similarity, 0.8))
     .orderBy(t => desc(t.similarity))
     .innerJoin(essays, eq(embeddings.essayId, essays.id))
     .limit(5);
